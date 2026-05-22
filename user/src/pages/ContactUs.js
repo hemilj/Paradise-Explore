@@ -14,6 +14,8 @@ function ContactUs() {
                 setUser(null);
             }
         }
+        // console.log('User data loaded from localStorage:', user);
+        // console.log('User ID', user?._id);
     }, []);
 
     const handleAgentSubmit = async (e) => {
@@ -22,6 +24,7 @@ function ContactUs() {
         const form = e.target;
 
         const formData = {
+            userId: form.userId.value,
             nameAgency: form.nameAgency.value,
             gstNumber: form.gstNumber.value,
             authorName: form.authorName.value,
@@ -182,6 +185,7 @@ function ContactUs() {
                             </div>
 
                             <h4 className="form-section-title">Author / Contact Person</h4>
+                            <input type="hidden" name="userId" defaultValue={user?._id} />
                             <div className="form-row">
                                 <div className="form-group">
                                     <label>Author Name *</label>

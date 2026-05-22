@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Swal from 'sweetalert2';
 
 function Header() {
 
     const [user, setUser] = useState(null);
+    const [agent, setAgent] = useState(false);
+    const [status, setStatus] = useState('');
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     // Read user from localStorage on mount
@@ -43,6 +46,31 @@ function Header() {
         document.addEventListener('click', handleOutsideClick);
         return () => document.removeEventListener('click', handleOutsideClick);
     }, []);
+
+
+    useEffect(() => {
+
+        const checkAgent = async () => {
+
+            try {
+
+                if (!user?._id) return;
+
+                const response = await axios.get(
+                    `http://localhost:5000/api/agency/check/${user._id}`
+                );
+
+                setAgent(response.data.isAgent);
+                setStatus(response.data.status);
+            } catch (error) {
+                console.error('Error checking agent status:', error);
+            }
+        };
+
+        checkAgent();
+
+    }, [user]);
+
 
     const handleLogout = () => {
         Swal.fire({
@@ -142,7 +170,7 @@ function Header() {
                     position: absolute;
                     top: calc(100% + 12px);
                     right: 0;
-                    min-width: 220px;
+                    min-width: 350px;
                     background: #fff;
                     border-radius: 14px;
                     box-shadow: 0 12px 40px rgba(0,0,0,0.14);
@@ -349,6 +377,116 @@ function Header() {
                                         <a className="dropdown-item" href="/settings">
                                             <i className="fa-solid fa-gear"></i> Settings
                                         </a>
+
+                                        {agent ? (
+                                            status === 'pending' ? (
+                                                <span
+                                                    style={{
+                                                        display: 'inline-block',
+                                                        fontSize: '11px',
+                                                        fontWeight: 600,
+                                                        color: '#b45309',
+                                                        backgroundColor: '#fef3c7',
+                                                        padding: '11px 16px',
+                                                        borderRadius: '12px',
+                                                        marginBottom: '8px',
+                                                        alignItems: 'center',
+                                                        margin: '0 10px'
+                                                    }}
+                                                >
+                                                    <i
+                                                        className="fa-solid fa-clock-rotate-left"
+                                                        style={{ marginRight: '4px' }}
+                                                    ></i>
+
+                                                    Agent Approval Pending
+                                                </span>
+                                            ) : (
+                                                <>
+                                                    <span
+                                                        style={{
+                                                            display: 'inline-block',
+                                                            fontSize: '11px',
+                                                            fontWeight: 600,
+                                                            color: '#15803d',
+                                                            backgroundColor: '#dcfce3',
+                                                            padding: '11px 16px',
+                                                            borderRadius: '12px',
+                                                            marginBottom: '8px',
+                                                            alignItems: 'center',
+                                                            margin: '0 10px'
+                                                        }}
+                                                    >
+                                                        <i
+                                                            className="fa-solid fa-circle-check"
+                                                            style={{ marginRight: '4px' }}
+                                                        ></i>
+
+                                                        Approved
+                                                    </span>
+
+                                                    <a
+                                                        href="../agent/index.php"
+                                                        style={{
+                                                            display: 'block',
+                                                            fontSize: '13px',
+                                                            color: '#0d9488',
+                                                            textDecoration: 'none',
+                                                            fontWeight: 500,
+                                                            marginTop: '4px',
+                                                            transition: 'color 0.2s',
+                                                            padding: '10px 16px'
+                                                        }}
+                                                        onMouseEnter={(e) =>
+                                                            (e.currentTarget.style.color = '#0f766e')
+                                                        }
+                                                        onMouseLeave={(e) =>
+                                                            (e.currentTarget.style.color = '#0d9488')
+                                                        }
+                                                    >
+                                                        Go to Agent Login
+
+                                                        <i
+                                                            className="fa-solid fa-arrow-right"
+                                                            style={{
+                                                                fontSize: '11px',
+                                                                marginLeft: '2px'
+                                                            }}
+                                                        ></i>
+                                                    </a>
+
+                                                    <div
+                                                        style={{
+                                                            backgroundColor: '#eff6ff',
+                                                            borderRadius: '6px',
+                                                            border: '1px solid #bfdbfe',
+                                                            padding: '10px 16px 10px 16px',
+                                                            margin: '0 10px'
+                                                        }}
+                                                    >
+                                                        <p
+                                                            style={{
+                                                                fontSize: '10px',
+                                                                color: '#1d4ed8',
+                                                                margin: 0,
+                                                                lineHeight: 1.4,
+                                                                fontWeight: 500
+                                                            }}
+                                                        >
+                                                            <i
+                                                                className="fa-solid fa-circle-info"
+                                                                style={{ marginRight: '3px' }}
+                                                            ></i>
+
+                                                            <strong>IF YOU LOGIN FIRST TIME:</strong>
+                                                            You need to use "Forgot Password" on the login page with your agency email to set up your account.
+                                                        </p>
+                                                    </div>
+                                                </>
+                                            )
+                                        ) : (
+                                           <></>
+                                        )}
 
                                         <div className="dropdown-divider"></div>
 

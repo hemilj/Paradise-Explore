@@ -50,9 +50,9 @@ const SideBar = () => {
 
             {/* Logout */}
             <div className="sidebar-footer">
-                <a href="/logout" className="sidebar-logout">
+                <NavLink to="/logout" className="sidebar-logout">
                     <i className="fa-solid fa-right-from-bracket sidebar-link-icon"></i> Logout
-                </a>
+                </NavLink>
             </div>
 
         </aside>

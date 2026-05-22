@@ -1,7 +1,10 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const path = require('path');
+
 const connectDB = require('./config/db');
+const { allUser } = require('./controllers/authController');
 
 dotenv.config();
 
@@ -12,11 +15,14 @@ app.use(cors());
 // BODY PARSER
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// Static folder for uploaded images
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Connect to MongoDB
 connectDB();
 
 // Define Routes
+app.use('/users', allUser)
 app.use('/api/auth', require('./routes/authUser'));
 app.use('/api/agency', require('./routes/authAgency'));
 

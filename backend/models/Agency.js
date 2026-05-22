@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 
 const AgencySchema = new mongoose.Schema({
+    userID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+        unique: true
+    },
     nameAgency: {
         type: String,
         required: true
@@ -21,6 +27,9 @@ const AgencySchema = new mongoose.Schema({
         type: String,
         unique: true,
         required: true
+    },
+    pass: {
+        type: String,
     },
     phoneNo: {
         type: String,

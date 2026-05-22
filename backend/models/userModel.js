@@ -45,6 +45,15 @@ const userSchema = new mongoose.Schema(
             required: false,
             default: null
         },
+        role: {
+            type: String,
+            enum: ["User", "Agent", "User/Agent"],
+            default: "User"
+        },
+        status: {
+            type: String,
+            default: 'active'
+        }
     },
     { timestamps: true }
 );

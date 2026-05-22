@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const User = require('../models/userModel');
@@ -11,7 +12,7 @@ const registerUser = async (req, res) => {
         console.log(req.body);
         console.log(req.file);
 
-        const { uname, email, pass, mobno, gen, dob, state, city, pin } = req.body;
+        const { uname, email, pass, mobno, gen, dob, state, city, pin, role } = req.body;
         const photo = req.file ? req.file.path : null;
 
         // Check if user already exists
@@ -31,7 +32,8 @@ const registerUser = async (req, res) => {
             state,
             city,
             pin,
-            photo
+            photo,
+            role: 'User'
         });
 
         // Generate JWT token
@@ -81,7 +83,65 @@ const loginUser = async (req, res) => {
     }
 }
 
+const allUser = async (req, res) => {
+    const data = await User.find();
+    res.json(data);
+}
+
+
+const blockUser = async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+
+        // Validate ID
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid user ID'
+            });
+        }
+
+        // Update user status
+        const user = await User.findById(id);
+
+        user.status = 'blocked';
+
+        await user.save();
+
+        // Check user exists
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
+            });
+        }
+
+        // await User.save(user);
+
+        res.status(200).json({
+            success: true,
+            message: 'User blocked successfully',
+            user
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+
+};
+
+
+
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    allUser,
+    blockUser
 };

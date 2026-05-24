@@ -83,12 +83,6 @@ const loginUser = async (req, res) => {
     }
 }
 
-const allUser = async (req, res) => {
-    const data = await User.find();
-    res.json(data);
-}
-
-
 const blockUser = async (req, res) => {
 
     try {
@@ -142,6 +136,5 @@ const blockUser = async (req, res) => {
 module.exports = {
     registerUser,
     loginUser,
-    allUser,
     blockUser
 };

@@ -144,7 +144,7 @@ const agentLogin = async (req, res) => {
             });
         }
 
-        res.status(200).json({ success: true, token: "agent123" });
+        res.status(200).json({ success: true, token: "agent123", nameAgency: agent.nameAgency, agentID: agent._id });
     } catch (error) {
         console.log(error);
         res.status(500).json({

@@ -4,7 +4,6 @@ const cors = require('cors');
 const path = require('path');
 
 const connectDB = require('./config/db');
-const { allUser } = require('./controllers/authController');
 
 dotenv.config();
 
@@ -22,9 +21,10 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 connectDB();
 
 // Define Routes
-app.use('/users', allUser)
+app.use('/all', require('./routes/allData'))
 app.use('/api/auth', require('./routes/authUser'));
 app.use('/api/agency', require('./routes/authAgency'));
+app.use('/api/package-types', require('./routes/packageTypes'));
 
 // Global Error Handler
 app.use((err, req, res, next) => {

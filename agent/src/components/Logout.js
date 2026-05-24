@@ -70,6 +70,9 @@ function Logout() {
                     },
                 }).then(() => {
                     sessionStorage.removeItem("token");
+                    sessionStorage.removeItem("userName");
+                    sessionStorage.removeItem("agentID");
+                    localStorage.removeItem("agentID");
                     window.location.href = "/login";
                 });
             } else {

@@ -8,6 +8,8 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Logout from './components/Logout';
 import ForgotPassword from "./pages/ForgotPassword";
+import PackageType from "./pages/PackageType";
+import AddPackageType from "./pages/AddPackageType";
 
 function App() {
 
@@ -62,6 +64,16 @@ function App() {
                       <Route
                         path="/logout"
                         element={<Logout />}
+                      />
+
+                      <Route
+                        path="/package-types"
+                        element={<PackageType />}
+                      />
+
+                      <Route
+                        path="/add-package-type"
+                        element={<AddPackageType />}
                       />
 
                       <Route

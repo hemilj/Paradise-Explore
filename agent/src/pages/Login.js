@@ -33,6 +33,9 @@ function Login() {
         const response = await axios.post('http://localhost:5000/api/agency/agentLogin', { email, password });
 
         sessionStorage.setItem("token", response.data.token);
+        sessionStorage.setItem("userName", response.data.nameAgency);
+        sessionStorage.setItem("agentID", response.data.agentID);
+        localStorage.setItem("agentID", response.data.agentID);
 
         await paradiseSwal.fire({
           html: `

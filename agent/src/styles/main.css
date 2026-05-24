@@ -141,7 +141,8 @@ body {
 .page-content {
     padding: 30px;
     overflow-y: auto;
-    flex: 1; /* Add this to ensure the dashboard scrolls properly while the header stays fixed */
+    flex: 1;
+    /* Add this to ensure the dashboard scrolls properly while the header stays fixed */
 }
 
 .dashboard-welcome {
@@ -200,7 +201,8 @@ body {
 .stat-icon {
     width: 60px;
     height: 60px;
-    background: rgba(230, 57, 70, 0.1); /* Secondary color with opacity */
+    background: rgba(230, 57, 70, 0.1);
+    /* Secondary color with opacity */
     color: var(--secondary);
     border-radius: 50%;
     display: flex;
@@ -283,7 +285,8 @@ body {
 }
 
 .btn-primary:hover {
-    background: #c12a36; /* Darker secondary */
+    background: #c12a36;
+    /* Darker secondary */
 }
 
 .btn-secondary {
@@ -305,9 +308,9 @@ body {
     align-items: center;
     min-height: 100vh;
     width: 100%;
-    flex: 1; 
+    flex: 1;
     /* Change this line from var(--bg-light) to var(--primary) */
-    background-color: var(--primary); 
+    background-color: var(--primary);
     padding: 20px;
 }
 
@@ -497,4 +500,36 @@ body {
 .swal2-timer-progress-bar {
     background: linear-gradient(90deg, #0d9488, #2dd4bf) !important;
     height: 3px !important;
+}
+
+/* =========================================
+   STATUS BADGES & ACTION ICONS (Package Types)
+   ========================================= */
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.status-active {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-inactive {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.action-icons a {
+    margin-right: 15px;
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+    font-size: 1.1rem;
+}
+
+.action-icons a:hover {
+    color: var(--secondary);
 }

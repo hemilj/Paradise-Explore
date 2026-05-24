@@ -5,18 +5,18 @@ function SideBar() {
   return (
     <aside className="sidebar">
       <div className="sidebar-header">
-        <a href="dashboard.php" style={{ textDecoration: 'none', color: '#fff' }}>
+        <a href="/" style={{ textDecoration: 'none', color: '#fff' }}>
           Paradise <span>Agent</span>
         </a>
       </div>
       <ul className="nav-links">
         <li>
-          <a href="dashboard.php" className="active">
+          <a href="/" className="active">
             <i className="fa-solid fa-gauge"></i> Dashboard
           </a>
         </li>
         <li>
-          <a href="package-types.php" className="">
+          <a href="/package-types" className="">
             <i className="fa-solid fa-tags"></i> Package Types
           </a>
         </li>

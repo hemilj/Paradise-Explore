@@ -25,6 +25,7 @@ app.use('/all', require('./routes/allData'))
 app.use('/api/auth', require('./routes/authUser'));
 app.use('/api/agency', require('./routes/authAgency'));
 app.use('/api/package-types', require('./routes/packageTypes'));
+app.use('/api/packages', require('./routes/packages'));
 
 // Global Error Handler
 app.use((err, req, res, next) => {

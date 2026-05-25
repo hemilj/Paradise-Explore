@@ -11,19 +11,19 @@ function SideBar() {
       </div>
       <ul className="nav-links">
         <li>
-          <a href="/" className="active">
+          <NavLink to="/" end>
             <i className="fa-solid fa-gauge"></i> Dashboard
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a href="/package-types" className="">
+          <NavLink to="/package-types">
             <i className="fa-solid fa-tags"></i> Package Types
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a href="view-packages.php" className="">
+          <NavLink to="/my-packages">
             <i className="fa-solid fa-map-location-dot"></i> Manage Packages
-          </a>
+          </NavLink>
         </li>
         <li>
           <a href="view_activities.php" className="">

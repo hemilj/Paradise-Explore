@@ -10,6 +10,9 @@ import Logout from './components/Logout';
 import ForgotPassword from "./pages/ForgotPassword";
 import PackageType from "./pages/PackageType";
 import AddPackageType from "./pages/AddPackageType";
+import MyPackages from "./pages/MyPackages";
+import CreatePackage from "./pages/CreatePackage";
+import PackageDetails from "./pages/PackageDetails";
 
 function App() {
 
@@ -74,6 +77,21 @@ function App() {
                       <Route
                         path="/add-package-type"
                         element={<AddPackageType />}
+                      />
+
+                      <Route
+                        path="/my-packages"
+                        element={<MyPackages />}
+                      />
+
+                      <Route
+                        path="/manage-packages"
+                        element={<CreatePackage />}
+                      />
+
+                      <Route
+                        path="/view-package/:id"
+                        element={<PackageDetails />}
                       />
 
                       <Route

@@ -7,6 +7,7 @@ import Users from "./pages/Users";
 import Agents from "./pages/Agents";
 import './styles/main.css';
 import Logout from "./components/Logout";
+import Packages from "./pages/Packages";
 
 function App() {
   const isLoggedIn = sessionStorage.getItem("token") === "admin123";
@@ -34,6 +35,7 @@ function App() {
                     <Route path="/logout" element={<Logout />} />
                     <Route path="/users" element={<Users />} />
                     <Route path="/agents" element={<Agents />} />
+                    <Route path="/packages" element={<Packages />} />
                     <Route path="*" element={<Navigate to="/" />} />
                   </Routes>
                 </div>

@@ -1,0 +1,29 @@
+{
+  "name": "paradise_explore",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "admin": "npm start --prefix admin",
+    "agent": "npm start --prefix agent",
+    "user": "npm start --prefix user",
+    "backend": "npm start --prefix backend",
+    "start-all": "concurrently -n BACKEND,USER,AGENT,ADMIN -c magenta,blue,yellow,green \"npm run backend\" \"wait-on http://localhost:5000 && npm run user\" \"wait-on http://localhost:3000 && npm run agent\" \"wait-on http://localhost:3001 && npm run admin\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hemilj/Paradise-Explore.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/hemilj/Paradise-Explore/issues"
+  },
+  "homepage": "https://github.com/hemilj/Paradise-Explore#readme",
+  "dependencies": {
+    "concurrently": "^9.2.1",
+    "wait-on": "^9.0.10"
+  }
+}

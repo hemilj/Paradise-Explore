@@ -1,7 +1,7 @@
 const express = require('express');
-const router  = express.Router();
-const multer  = require('multer');
-const path    = require('path');
+const router = express.Router();
+const multer = require('multer');
+const path = require('path');
 const { body } = require('express-validator');
 
 const {
@@ -13,7 +13,7 @@ const {
 // ── Multer: disk storage for package images ──────────────────────────────────
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, 'uploads/'),
-    filename:    (req, file, cb) => {
+    filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
         cb(null, 'pkg-' + uniqueSuffix + path.extname(file.originalname));
     }

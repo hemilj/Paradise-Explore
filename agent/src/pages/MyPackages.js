@@ -18,8 +18,8 @@ const formatDate = (iso) => {
 function MyPackages() {
 
     const [packages, setPackages] = useState([]);
-    const [loading, setLoading]   = useState(true);
-    const [error, setError]       = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const agentID = localStorage.getItem('agentID') || sessionStorage.getItem('agentID');
@@ -84,6 +84,7 @@ function MyPackages() {
                                     <th>Duration</th>
                                     <th>Created At</th>
                                     <th>Action</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -102,6 +103,12 @@ function MyPackages() {
                                             >
                                                 <i className="fa-solid fa-eye"></i> View Details
                                             </NavLink>
+                                        </td>
+                                        <td>
+                                            <span className={`status-badge-outline ${pkg.status === 'inactive' ? 'inactive' : 'active'}`}>
+                                                <i className={`fa-solid ${pkg.status === 'inactive' ? 'fa-clock-rotate-left' : 'fa-check'}`}></i>
+                                                {pkg.status.charAt(0).toUpperCase() + pkg.status.slice(1)}
+                                            </span>
                                         </td>
                                     </tr>
                                 ))}

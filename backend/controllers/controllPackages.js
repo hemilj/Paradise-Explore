@@ -104,4 +104,25 @@ const getPackageById = async (req, res) => {
     }
 };
 
-module.exports = { createPackage, getPackagesByAgent, getPackageById };
+// ── PUT: Update Package Status and Commission ─────────────────────────────────
+const updatePackageStatus = async (req, res) => {
+    try {
+        const { status, commission } = req.body;
+        const updatedPackage = await Package.findByIdAndUpdate(
+            req.params.id,
+            { status, commission },
+            { new: true }
+        );
+
+        if (!updatedPackage) {
+            return res.status(404).json({ message: 'Package not found' });
+        }
+
+        res.json({ message: 'Package updated successfully', package: updatedPackage });
+    } catch (error) {
+        console.error('Update package status error:', error);
+        res.status(500).json({ message: error.message });
+    }
+};
+
+module.exports = { createPackage, getPackagesByAgent, getPackageById, updatePackageStatus };

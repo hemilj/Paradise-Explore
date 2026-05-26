@@ -8,6 +8,7 @@ const {
     createPackage,
     getPackagesByAgent,
     getPackageById,
+    updatePackageStatus,
 } = require('../controllers/controllPackages');
 
 // ── Multer: disk storage for package images ──────────────────────────────────
@@ -42,5 +43,6 @@ const packageValidation = [
 router.post('/add', upload.array('package_images[]', 20), packageValidation, createPackage);
 router.get('/agent/:agentID', getPackagesByAgent);
 router.get('/:id', getPackageById);
+router.put('/:id/status', updatePackageStatus);
 
 module.exports = router;

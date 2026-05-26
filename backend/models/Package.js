@@ -3,16 +3,16 @@ const mongoose = require('mongoose');
 // Sub-schema: one itinerary day
 const ItineraryDaySchema = new mongoose.Schema({
     day_number: { type: Number, required: true },
-    day_title:  { type: String, required: true },
-    day_desc:   { type: String, required: true },
+    day_title: { type: String, required: true },
+    day_desc: { type: String, required: true },
 }, { _id: false });
 
 // Sub-schema: one departure batch with pricing
 const BatchSchema = new mongoose.Schema({
-    start_date:      { type: Date,   required: true },
-    end_date:        { type: Date,   required: true },
-    price:           { type: Number, required: true },
-    max_people:      { type: Number, required: true },
+    start_date: { type: Date, required: true },
+    end_date: { type: Date, required: true },
+    price: { type: Number, required: true },
+    max_people: { type: Number, required: true },
     available_seats: { type: Number, required: true },
 }, { _id: false });
 
@@ -66,10 +66,14 @@ const PackageSchema = new mongoose.Schema({
         type: [BatchSchema],
         default: [],
     },
+    commission: {
+        type: Number,
+        default: 0,
+    },
     status: {
         type: String,
         enum: ['active', 'inactive'],
-        default: 'active',
+        default: 'inactive',
     },
 }, { timestamps: true });
 

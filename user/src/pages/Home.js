@@ -1,6 +1,15 @@
-import React from 'react'
-
+import React, { useState, useEffect } from 'react'
+import axios from 'axios';
 function Home() {
+
+    const [allPackages, setAllPackages] = useState([]);
+    const fetchAllPackages = async () => {
+        const res = await axios.get('http://localhost:5000/all/packages');
+        setAllPackages(res.data);
+    }
+    useEffect(() => {
+        fetchAllPackages();
+    }, []);
     return (
         <div>
             <header id="home" className="hero">
@@ -31,205 +40,38 @@ function Home() {
 
                     <div className="packages-slider" id="packageSlider">
 
-                        <div className="package-card">
-                            <div className="card-image">
-                                <img src="../agent/uploads/Manali.jfif" alt="Package Image" />
-                                <span className="price-tag">₹11,000</span>
-                            </div>
-
-                            <div className="card-content">
-                                <span className="pkg-type">Adventure</span>
-
-                                <h3>Manali Adventure Tour</h3>
-
-                                <div className="pkg-author">
-                                    <i className="fa-regular fa-circle-user"></i>
-                                    Posted by <strong>Shiv Traveller</strong>
+                        {allPackages.map(pkg => (
+                            <div className="package-card" key={pkg._id}>
+                                <div className="card-image">
+                                    <img src={`http://localhost:5000/uploads/${pkg.images[0]}`} alt="Package Image" />
+                                    <span className="price-tag">{pkg.batches && pkg.batches.length > 0
+                                        ? `₹${pkg.batches[0].price + (pkg.batches[0].price * (pkg.commission / 100))}`
+                                        : 'N/A'}</span>
                                 </div>
 
-                                <div className="card-info">
-                                    <span>
-                                        <i className="fa-regular fa-clock"></i>
-                                        5 Days / 4 Nights
-                                    </span>
+                                <div className="card-content">
+                                    <span className="pkg-type">{pkg.type_id?.type_name || 'N/A'}</span>
+
+                                    <h3>{pkg.package_title}</h3>
+
+                                    <div className="pkg-author">
+                                        <i className="fa-regular fa-circle-user"></i>
+                                        Posted by <strong>{pkg.agentID?.nameAgency}</strong>
+                                    </div>
+
+                                    <div className="card-info">
+                                        <span>
+                                            <i className="fa-regular fa-clock"></i>
+                                            {pkg.duration}
+                                        </span>
+                                    </div>
+
+                                    <a href="package-details.php?id=1" className="btn btn-secondary">
+                                        View Details
+                                    </a>
                                 </div>
-
-                                <a href="package-details.php?id=1" className="btn btn-secondary">
-                                    View Details
-                                </a>
                             </div>
-                        </div>
-
-                        <div className="package-card">
-                            <div className="card-image">
-                                <img src="../agent/uploads/Goa.jpg" alt="Package Image" />
-                                <span className="price-tag">₹15,000</span>
-                            </div>
-
-                            <div className="card-content">
-                                <span className="pkg-type">Family</span>
-
-                                <h3>Goa Family Fun Package</h3>
-
-                                <div className="pkg-author">
-                                    <i className="fa-regular fa-circle-user"></i>
-                                    Posted by <strong>Pickup Traveller</strong>
-                                </div>
-
-                                <div className="card-info">
-                                    <span>
-                                        <i className="fa-regular fa-clock"></i>
-                                        5 Days / 4 Nights                                </span>
-                                </div>
-
-                                <a href="package-details.php?id=2" className="btn btn-secondary">
-                                    View Details
-                                </a>
-                            </div>
-                        </div>
-
-
-                        <div className="package-card">
-                            <div className="card-image">
-                                <img src="../agent/uploads/dwarka.jpg" alt="Package Image" />
-                                <span className="price-tag">₹4,500</span>
-                            </div>
-
-                            <div className="card-content">
-                                <span className="pkg-type">Family</span>
-
-                                <h3>Saurashtra Tour</h3>
-
-                                <div className="pkg-author">
-                                    <i className="fa-regular fa-circle-user"></i>
-                                    Posted by <strong>Shiv Traveller</strong>
-                                </div>
-
-                                <div className="card-info">
-                                    <span>
-                                        <i className="fa-regular fa-clock"></i>
-                                        4 Days / 5 Nights                                </span>
-                                </div>
-
-                                <a href="package-details.php?id=3" className="btn btn-secondary">
-                                    View Details
-                                </a>
-                            </div>
-                        </div>
-
-
-                        <div className="package-card">
-                            <div className="card-image">
-                                <img src="../agent/uploads/ujjain.jpg" alt="Package Image" />
-                                <span className="price-tag">₹24,999</span>
-                            </div>
-
-                            <div className="card-content">
-                                <span className="pkg-type">Religious</span>
-
-                                <h3>Divine Ujjain &amp; Omkareshwar Spiritual Retreat</h3>
-
-                                <div className="pkg-author">
-                                    <i className="fa-regular fa-circle-user"></i>
-                                    Posted by <strong>Dream World Travel</strong>
-                                </div>
-
-                                <div className="card-info">
-                                    <span>
-                                        <i className="fa-regular fa-clock"></i>
-                                        7 Days / 8 Nights                                </span>
-                                </div>
-
-                                <a href="package-details.php?id=4" className="btn btn-secondary">
-                                    View Details
-                                </a>
-                            </div>
-                        </div>
-
-                        <div className="package-card">
-                            <div className="card-image">
-                                <img src="../agent/uploads/Rishikesh.jfif" alt="Package Image" />
-                                <span className="price-tag">₹18,999</span>
-                            </div>
-
-                            <div className="card-content">
-                                <span className="pkg-type">Religious</span>
-
-                                <h3>Chardham Yatra</h3>
-
-                                <div className="pkg-author">
-                                    <i className="fa-regular fa-circle-user"></i>
-                                    Posted by <strong>Dream World Travel</strong>
-                                </div>
-
-                                <div className="card-info">
-                                    <span>
-                                        <i className="fa-regular fa-clock"></i>
-                                        12 Days / 11 Nights                                </span>
-                                </div>
-
-                                <a href="package-details.php?id=5" className="btn btn-secondary">
-                                    View Details
-                                </a>
-                            </div>
-                        </div>
-
-                        <div className="package-card">
-                            <div className="card-image">
-                                <img src="../agent/uploads/p1.jfif" alt="Package Image" />
-                                <span className="price-tag">₹8,999</span>
-                            </div>
-
-                            <div className="card-content">
-                                <span className="pkg-type">Adventure</span>
-
-                                <h3>Rishikesh Adventure Tour</h3>
-
-                                <div className="pkg-author">
-                                    <i className="fa-regular fa-circle-user"></i>
-                                    Posted by <strong>Pickup Traveller</strong>
-                                </div>
-
-                                <div className="card-info">
-                                    <span>
-                                        <i className="fa-regular fa-clock"></i>
-                                        4 Days / 3 Nights                                </span>
-                                </div>
-
-                                <a href="package-details.php?id=6" className="btn btn-secondary">
-                                    View Details
-                                </a>
-                            </div>
-                        </div>
-
-
-                        <div className="package-card">
-                            <div className="card-image">
-                                <img src="../agent/uploads/5a016abc1aaf8db14582c033661f11bf.jpg" alt="Package Image" />
-                                <span className="price-tag">₹5,000</span>
-                            </div>
-
-                            <div className="card-content">
-                                <span className="pkg-type">Spiritual</span>
-
-                                <h3>Dwarka Somnath Divine Darshan Yatra</h3>
-
-                                <div className="pkg-author">
-                                    <i className="fa-regular fa-circle-user"></i>
-                                    Posted by <strong>Wanderlust Explorers</strong>
-                                </div>
-
-                                <div className="card-info">
-                                    <span>
-                                        <i className="fa-regular fa-clock"></i>
-                                        4 Days / 3 Nights                                </span>
-                                </div>
-
-                                <a href="package-details.php?id=7" className="btn btn-secondary">
-                                    View Details
-                                </a>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </section >

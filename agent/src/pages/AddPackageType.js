@@ -4,16 +4,16 @@ import Swal from 'sweetalert2';
 
 /* ── Paradise-themed Swal base ── */
 const paradiseSwal = Swal.mixin({
-  background: "#0f172a",
-  color: "#e2e8f0",
-  customClass: {
-    popup: "paradise-swal-popup",
-    title: "paradise-swal-title",
-    htmlContainer: "paradise-swal-html",
-    confirmButton: "paradise-swal-confirm",
-    cancelButton: "paradise-swal-cancel",
-  },
-  buttonsStyling: false,
+    background: "#0f172a",
+    color: "#e2e8f0",
+    customClass: {
+        popup: "paradise-swal-popup",
+        title: "paradise-swal-title",
+        htmlContainer: "paradise-swal-html",
+        confirmButton: "paradise-swal-confirm",
+        cancelButton: "paradise-swal-cancel",
+    },
+    buttonsStyling: false,
 });
 
 function AddPackageType() {
@@ -52,15 +52,19 @@ function AddPackageType() {
         }
 
         const formData = new FormData(event.target);
-        const data = {
-            ...Object.fromEntries(formData.entries()),
-            agentID
-        };
 
-        console.log(data, agentID);
+        formData.append("agentID", agentID);
 
         try {
-            const res = await axios.post('http://localhost:5000/api/package-types/add', data);
+            const res = await axios.post(
+                'http://localhost:5000/api/package-types/add',
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data"
+                    }
+                }
+            );
 
             await paradiseSwal.fire({
                 html: `
@@ -96,7 +100,7 @@ function AddPackageType() {
         } catch (error) {
             console.error(error);
             const errMsg = error.response?.data?.message || 'Error adding package type';
-            
+
             await paradiseSwal.fire({
                 html: `
                     <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;padding:0.5rem 0">
@@ -174,6 +178,17 @@ function AddPackageType() {
                             rows="4"
                             placeholder="Briefly describe what this type of package includes..."
                         ></textarea>
+                    </div>
+
+                    <div className="form-group">
+                        <label>Upload Image</label>
+                        <input
+                            type="file"
+                            name="image"
+                            className="form-control"
+                            accept="image/*"
+                            required
+                        />
                     </div>
 
                     <div style={{ textAlign: 'right', marginTop: '20px' }}>

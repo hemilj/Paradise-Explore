@@ -3,10 +3,61 @@ import axios from 'axios';
 function Home() {
 
     const [allPackages, setAllPackages] = useState([]);
+    const [destinations, setDestinations] = useState([]);
+    const [pkgTypes, setPkgTypes] = useState([]);
+
     const fetchAllPackages = async () => {
-        const res = await axios.get('http://localhost:5000/all/packages');
-        setAllPackages(res.data);
+        try {
+            const res = await axios.get('http://localhost:5000/all/packages');
+            setAllPackages(res.data);
+
+            fecthDestinatiosn(res);
+
+            fetchPkgType(res);
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const fecthDestinatiosn = (response) => {
+        // Remove duplicate destinations
+
+        const packages = response.data;
+
+        const uniqueDestinations = [];
+
+        const addedDestinations = new Set();
+
+        packages.forEach((pkg) => {
+
+            // Example: Goa
+            const destinationName = pkg.destination?.trim();
+
+            // If not already added
+            if (!addedDestinations.has(destinationName)) {
+
+                addedDestinations.add(destinationName);
+
+                uniqueDestinations.push({
+                    destination: destinationName,
+                    image: pkg.images?.[0]
+                });
+            }
+        });
+
+        setDestinations(uniqueDestinations);
+    };
+
+    const fetchPkgType = async () => {
+        try {
+            const res = await axios.get('http://localhost:5000/all/types');
+            setPkgTypes(res.data)
+        } catch (error) {
+            console.log(error)
+        }
     }
+
     useEffect(() => {
         fetchAllPackages();
     }, []);
@@ -80,41 +131,15 @@ function Home() {
                 <div className="container">
                     <h2 className="section-title">Packages By City</h2>
                     <div className="city-flex">
-                        <a href="package.php?destination=Manali&amp;duration=&amp;category=" className="city-item">
-                            <div className="city-img" style={{ backgroundImage: "url('../agent/uploads/Manali.jfif');" }}>
+                        {destinations.map((item, index) => (
+                            <div key={index}>
+                                <a href="package.php?destination=Manali&amp;duration=&amp;category=" className="city-item">
+                                    <div className="city-img" style={{ backgroundImage: `url('http://localhost:5000/uploads/${item.image}')` }}>
+                                    </div>
+                                    <span>{item.destination}</span>
+                                </a>
                             </div>
-                            <span>Manali</span>
-                        </a>
-                        <a href="package.php?destination=Goa&amp;duration=&amp;category=" className="city-item">
-                            <div className="city-img" style={{ backgroundImage: "url('../agent/uploads/Goa.jpg');" }}>
-                            </div>
-                            <span>Goa</span>
-                        </a>
-                        <a href="package.php?destination=Dwarka&amp;duration=&amp;category=" className="city-item">
-                            <div className="city-img" style={{ backgroundImage: "url('../agent/uploads/dwarka.jpg');" }}>
-                            </div>
-                            <span>Dwarka</span>
-                        </a>
-                        <a href="package.php?destination=Ujjain&amp;duration=&amp;category=" className="city-item">
-                            <div className="city-img" style={{ backgroundImage: "url('../agent/uploads/ujjain.jpg');" }}>
-                            </div>
-                            <span>Ujjain</span>
-                        </a>
-                        <a href="package.php?destination=Kedarnath, Badrinath&amp;duration=&amp;category=" className="city-item">
-                            <div className="city-img" style={{ backgroundImage: "url('../agent/uploads/Rishikesh.jfif');" }}>
-                            </div>
-                            <span>Kedarnath, Badrinath</span>
-                        </a>
-                        <a href="package.php?destination=Rishikesh&amp;duration=&amp;category=" className="city-item">
-                            <div className="city-img" style={{ backgroundImage: "url('../agent/uploads/p1.jfif');" }}>
-                            </div>
-                            <span>Rishikesh</span>
-                        </a>
-                        <a href="package.php?destination=Dwarka, Somnath, Salangpur (Gujarat)&amp;duration=&amp;category=" className="city-item">
-                            <div className="city-img" style={{ backgroundImage: "url('../agent/uploads/5a016abc1aaf8db14582c033661f11bf.jpg');" }}>
-                            </div>
-                            <span>Dwarka, Somnath, Salangpur (Gujarat)</span>
-                        </a>
+                        ))}
                     </div>
                 </div>
             </section>
@@ -173,36 +198,14 @@ function Home() {
                 <div className="container">
                     <h2 className="section-title">Packages By Category</h2>
                     <div className="category-grid">
-                        <div className="cat-card">
-                            <a href="package.php?destination=&amp;duration=&amp;category=Adventure" className="cat-card-link">
-                                <img src="../agent/uploads/category/1773069835_Adventure.jpg" alt="1" />
-                                <div className="cat-overlay">Adventure</div>
-                            </a>
-                        </div>
-                        <div className="cat-card">
-                            <a href="package.php?destination=&amp;duration=&amp;category=Honeymoon" className="cat-card-link">
-                                <img src="../agent/uploads/category/1773069796_Honeymoon.jpg" alt="3" />
-                                <div className="cat-overlay">Honeymoon</div>
-                            </a>
-                        </div>
-                        <div className="cat-card">
-                            <a href="package.php?destination=&amp;duration=&amp;category=Family" className="cat-card-link">
-                                <img src="../agent/uploads/category/1773069743_family.jpg" alt="4" />
-                                <div className="cat-overlay">Family</div>
-                            </a>
-                        </div>
-                        <div className="cat-card">
-                            <a href="package.php?destination=&amp;duration=&amp;category=Religious" className="cat-card-link">
-                                <img src="../agent/uploads/category/1773070001_dwarka.jpg" alt="6" />
-                                <div className="cat-overlay">Religious</div>
-                            </a>
-                        </div>
-                        <div className="cat-card">
-                            <a href="package.php?destination=&amp;duration=&amp;category=Spiritual" className="cat-card-link">
-                                <img src="../agent/uploads/9726b49e745c99a4654d5601955f036c.jpg" alt="8" />
-                                <div className="cat-overlay">Spiritual</div>
-                            </a>
-                        </div>
+                        {pkgTypes.map((item, index) => (
+                            <div className="cat-card" key={index}>
+                                <a href="package.php?destination=&amp;duration=&amp;category=Adventure" className="cat-card-link">
+                                    <img src={"http://localhost:5000/uploads/" + item.image} alt="1" />
+                                    <div className="cat-overlay">{item.type_name}</div>
+                                </a>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>

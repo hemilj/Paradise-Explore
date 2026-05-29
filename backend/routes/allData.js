@@ -42,4 +42,16 @@ router.get(
     }
 );
 
+router.get(
+    '/types',
+    async (req, res) => {
+        try {
+            const data = await PackageTypes.find();
+            res.json(data);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    }
+);
+
 module.exports = router;
